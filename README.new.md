@@ -27,6 +27,10 @@
 	PROD_HOST or STAGE_HOST in .env.dev, so that the SSL certificates will
 	work (if any).
 
+4. Run the setup script:
+
+        $ bin/ubuntu-setup.sh
+
 4. If you already have an SSL certificate and Diffie-Helman Group, put them
 	in /home/$HOST_USER/app/cert.  The certificate should be named
 	`fullchain.pem`, the key should be named `privkey.pem`, and the
@@ -41,7 +45,7 @@
    the server without using SSL.  Once the server is running in no-ssl mode,
    you can use it to obtain certificates.
 
-		$ ./start.sh --mode --no-ssl
+        $ ./start.sh --mode --no-ssl
 
 6. If you need to obtain certificates, then once the server is running in
    no-ssl, do:
