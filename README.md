@@ -1,7 +1,4 @@
-This repository contains a boiler plate MERN app.  You can clone it and use it
-as a starting point for your new app.  The first thing you'll need to do after
-cloning it is disassociate it from the current git repo, and associate it to a
-new repo for your new app!
+This repository sets up a boilerplate installation of nginx that runs inside a docker instance.  Use it as a starting point for your new app.  
 
 Follow these steps to configure this repo to be the starting point for your new
 app:
@@ -25,31 +22,11 @@ app:
     3. your staging domain name, which should be a subdomain of your production
 	   domain name, e.g. staging.example.com.
 
-# This has been moved to the developper's setup steps (in README.new.md)
-#6) Make a self-signed certificate issued to your development domain name.  If
-#	you've edited `.env.dev`, then all you need to do is run
-#	`bin/self-sign-cert.sh`.  Commit the three files generated inside
-#	`<proj>/cert` to your project's repo.  You will need to force the commit
-#	because .gitignore is configured to not track anythin uncer `<proj>/cert`.
-#	The develpment certificate isn't sensitive.  But never commit a real
-#	certificate for the production server to the repo (the certificate should be
-#	revoked immediately if you do).
-
-7) If your app will communicate with Facebook, Twitter, etc., then you'll need
-	to get tokens and secrets.  Generally, you'll need two sets of tokens and
-	keys: one for your production server, and one for your dev and staging
-	environments.   Put the development set in `.keys.dev`, but don't
-	commit them -- you'll need to share out the dev keys to your developpers
-	through some secure mechanism.  The production credentials should only
-	ever be kept in encrypted form on access-restricted systems.
-
-8) Now that you've done the steps in this README, they won't need to be done
-	again by other developers who clone the repo.  Go ahead and replace this
-	README with the `README.new.md`:
+6) Now that you've done the steps in this README you can get rid of it.
+	Replace it with another README that will be used by developers to get
+	started on your project:
 
 	$ mv README.new.md README.md
 
-	And follow the steps in the other README, which is the README that
-	developpers will refer to to set up their individual environments.
-
+	Go ahead and follow the steps in that README.
 

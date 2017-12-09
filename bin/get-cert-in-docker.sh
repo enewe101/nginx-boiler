@@ -1,5 +1,3 @@
-# Install dependencies -- SSL/TLS cert management
-
 # First, move the old certificate if any 
 mkdir -p /app/cert/old &> /dev/null
 mv /app/cert/* /app/cert/old &> /dev/null

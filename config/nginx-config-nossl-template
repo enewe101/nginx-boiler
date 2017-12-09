@@ -1,7 +1,7 @@
 server {
 	listen 80 default_server;
 	listen [::]:80 default_server;
-	server_name aventamedia.com;
+	server_name {{server_name}};
 
 	location ~ /static {
 		root /app;
@@ -19,7 +19,7 @@ server {
 		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 		proxy_set_header Host $http_host;
 		proxy_set_header X-NginX-Proxy true;
-		proxy_pass http://127.0.0.1:8080/;
+		proxy_pass http://{{node_host}}:{{node_port}}/;
 		proxy_redirect off;
 		proxy_http_version 1.1;
 		proxy_set_header Upgrade $http_upgrade;

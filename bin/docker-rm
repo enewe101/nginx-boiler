@@ -1,10 +1,4 @@
 #!/bin/sh
-docker kill mern_node_1 mern_mongodb_1
-docker rm mern_node_1 mern_mongodb_1
-docker rmi node:1 mongodb:1
-
-# Get the non-bound volume that held by the mern_mongodb, so we can delete it
-del_volume=`docker inspect --format="{{.Mounts}}" mern_mongodb_1 | tr '{' '\n' | egrep -v 'bind|mern_mongodata|\[' | cut -f2 -d' '`
-
-# Now delete $del_volume and the volume holding mongo data, "mern_mongodata"
-docker volume rm mern_mongodata $del_volume
+docker kill mern_nginx_1
+docker rm mern_nginx_1
+docker rmi nginx:1

@@ -1,24 +1,14 @@
 version: '3'
 services:
 
-  node:
+  nginx:
     environment:
-      - APP_DB_USER
-      - APP_DB_PASS
       - NODE_ENV
       - USE_SSL
       - HOST
-      - TWITTER_CONSUMER_KEY
-      - TWITTER_CONSUMER_SECRET
-      - TWITTER_ACCESS_TOKEN
-      - TWITTER_ACCESS_TOKEN_SECRET
-      - FACEBOOK_APP_ID
-      - FACEBOOK_APP_SECRET
-      - INSTAGRAM_CLIENT_ID
-      - INSTAGRAM_CLIENT_SECRET
     build:
       context: ../
-      dockerfile: docker/node-dockerfile
+      dockerfile: docker/nginx-dockerfile
       args:
         - NODE_ENV
         - USE_SSL
@@ -26,26 +16,7 @@ services:
     ports:
       - 80:80
       - 443:443
-    links:
-      - mongodb
-    image: 'node:1'
     volumes:
-      - ${APP_VOLUME_MAPPING}
-      - ../../letsencrypt:/etc/letsencrypt
-
-  mongodb:
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME
-      - MONGO_INITDB_ROOT_PASSWORD
-      - APP_DB_USER
-      - APP_DB_PASS
-    build:
-      context: ../
-      dockerfile: docker/mongo-dockerfile
-    ports:
-      - 27017:27017
-    volumes:
-      - ../mongodata:/data/db
-      - ../bin/mongo-entrypoint/:/docker-entrypoint-initdb.d/
-    image: 'mongodb:1'
+      -  ..:/app
+    image: 'nginx:1'
 

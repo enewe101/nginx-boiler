@@ -1,4 +1,0 @@
-This directory gets mapped to /data/db inside the mongodb container, and
-serves as a backup of the data outside of the container.  That way if the mongo
-db container is removed, the data won't be lost, and data is preserved across
-removing then rebuilding the mongodb container.

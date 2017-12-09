@@ -1,84 +1,52 @@
-**To start developing on a Mac:**
+**To start developing:**
 
 1. Clone this repo.
-2. Install docker community edition and docker-compose.  You install them
-   together because docker-compose is bundled in with docker community edition 
-   on Mac.
-
-3. Map requests issued to `https?://*.dev` to localhost, and create a
-   self-signed certificate.  
-
-		$ bin/mac-setup.sh # (Is fine: "Error: dnsmasq ... already installed")
-
+2. Install docker community edition and docker-compose (which are bundled
+   together in the same install)
 4. Have a look at `dev-cheatsheet.txt` for a guide on starting up and
    managing the development environment.
+5. Make a self-signed SSL certificate and configure Chrome to accept that:
 
-5. Start the development environment by doing 
+		$ bin/mac-setup.sh
 
-		$ source .env.dev
-		$ ./start.sh
+5. Start the development server by doing
 
-**To setup a staging environment on a new Ubuntu virtual machine do:**
-
-1. Run this command on the target machine:
-
-		#TODO: change this to point to the new repo for this project
-        $ bash <(curl https://raw.githubusercontent.com/enewe101/webapp-boiler/master/bin/ubuntu-setup.sh)
-
-2. Obtain your domain name, and ensure that the subdomain at which your staging
-   server will reside (as indicated in by the STAGE\_HOST variable in 
-   `.env.dev`) is mapped to your staging server's IP address.
-
-3. If you haven't already done so, obtain secrets from providers (Facebook,
-   Twitter, Instagram, etc) to be used for dev and staging, and put them into 
-   `.keys.dev`.
-
-4. Obtain an SSL certificate for your staging subdomain by running
-
-        $ bin/letsencrypt.sh
-
-   You may need to modify nginx's configuration and restart it to make the
-   well-known file servable.  Be sure to copy the certificate and private
-   key into the locations expected according to nginx's config.  Also, be
-   sure to create a Diffie Hellman group, if not already done by that 
-   script.
-
-3. Start the staging environment by doing 
-
-        $ ./start.sh --stage
+		$ ./start.sh --dev
 
 
-**To start production do:**
-
-1. Run this command on the target machine:
-
-        $ bash <(curl https://raw.githubusercontent.com/enewe101/webapp-boiler/master/bin/ubuntu-setup.sh)
-
+**To setup a staging or production environment an Ubuntu machine:**
+1. Clone the repo.
 2. Make secrets for authentication between services of the app by running
 
-        $ bin/make-env.sh
+        $ bin/make-env.sh --mode
 
-   You will need to provide a passphrase.  The secrets will be stored in 
-   `.env.prod.gpg`.
+	Where "mode" should be replaced by "prod" or "stage".  You will need to 
+	provide a passphrase.  The secrets will be stored in `.env.<mode>.gpg`.
 
-2. Obtain your domain name (as indicated in by the STAGE\_HOST variable in 
-   `.env.dev`), and ensure it is mapped to your staging server's IP address.
+3. Note, you must be on the host whose IP resolves from the domain name in 
+	PROD_HOST or STAGE_HOST in .env.dev, so that the SSL certificates will
+	work (if any).
 
-3. Obtain secrets from providers (Facebook, Twitter, Instagram, etc) and
-   encrypt the secrets and IDs into `.keys.prod.gpg`.
+4. If you already have an SSL certificate and Diffie-Helman Group, put them
+	in /home/$HOST_USER/app/cert.  The certificate should be named
+	`fullchain.pem`, the key should be named `privkey.pem`, and the
+	diffie-hellman group should be named `dhparam.pem`.
 
-4. Obtain an SSL certificate for the domain by running
+5. Start the server by doing 
 
-        $ bin/letsencrypt.sh
+        $ ./start.sh --mode
 
-   You may need to modify nginx's configuration and restart it to make the
-   well-known file servable.  Be sure to copy the certificate and private
-   key into the locations expected according to nginx's config.  Also, be
-   sure to create a Diffie Hellman group, if not already done by that 
-   script.
+   where "mode" should be replaced with "prod" for production or "stage" for
+   staging.  If you have no SSL certificates, add the --no-ssl flag to start
+   the server without using SSL.  Once the server is running in no-ssl mode,
+   you can use it to obtain certificates.
 
-5. Start the production environment by doing 
+		$ ./start.sh --mode --no-ssl
 
-        $ ./start.sh --prod
+6. If you need to obtain certificates, then once the server is running in
+   no-ssl, do:
 
+        $ bin/get-cert.sh
 
+    This will use certbot to obtain certificates, will generate a Diffie-Helman
+	group, and then will restart the server using SSL.

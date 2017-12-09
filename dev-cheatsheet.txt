@@ -1,8 +1,7 @@
 STARTING THE DEV ENVIRONMENT
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To start up the development servers, you need to build the dockers that hold
-the servers, then start them up.  You can do that by running
+To start up the mongodb instance within a docker, do:
 
 	$ ./start.sh
 
@@ -14,46 +13,10 @@ rebuild the images from scratch (e.g. if changes are made to files in
 
 	$ ./start.sh --force-recreate
 
-Once the server dockers are started up, you can browse to https://localhost
-to see the app.  
+Once the server dockers are started up, you can do:
 
+    $ bin/docker-connect.sh
 
-
-RESTARTING AND ACCESSING LOGS FOR THE NODE APP AND THE NGINX WEBSERVER
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-You can connect to the docker container that is running the webserver just like
-you would connect to any docker container.  As a convenience, you can just run:
-
-	$ bin/node-connect.sh
-
-Once connected to that docker, you can stop the app (running in node) by doing:
-
-	# pm2 kill
-
-(Note, the # prompt is meant to represent the fact that this is a prompt
-inside the node container, not your laptop's shell.) 
-
-You can start the app again by doing: 
-
-	# pm2 start config/ecosystem.config.json
-
-You can view the app's output (e.g. anythin output to console.log and any error
-messages in the node app) by running:
-
-	# pm2 log
-
-To connect to the webserver container and start watching the logs in a single
-step, do this (when outside of the node container):
-
-	$ bin/node-console.sh
-
-The nginx webserver is runningn inside the same container as the node app.  So,
-you can first connect to that container as above.  You can `stop`, `start`, or
-`restart` nginx by running the following from the /app directory of the
-container:
-
-	# bin/node <subcommand>
-
+To enter into the docker container in which nginx is running.
 The nginx logs are located at `/var/log/nginx`
 
