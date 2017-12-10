@@ -1,0 +1,1 @@
+This file ensures that its containing directory ('cert') is committed to the repostitory.  The directory will hold the SSL certificate(s) and Diffie-Hellman groups when they are created.

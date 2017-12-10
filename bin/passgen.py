@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #
 # Substitutes all instances of "secret" in a template file with a strong 
 # password.
@@ -62,4 +62,4 @@ if __name__ == '__main__':
     except IndexError:
         length = DEFAULT_LENGTH
 
-    print sub_in_passwords(open(input_path).read(), length)
+    print(sub_in_passwords(open(input_path).read(), length))

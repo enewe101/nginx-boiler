@@ -21,10 +21,10 @@
         $ bin/make-env.sh --mode
 
 	Where "mode" should be replaced by "prod" or "stage".  You will need to 
-	provide a passphrase.  The secrets will be stored in `.env.<mode>.gpg`.
+	provide a passphrase.  The secrets will be stored in `.env.gpg`.
 
 3. Note, you must be on the host whose IP resolves from the domain name in 
-	PROD_HOST or STAGE_HOST in .env.dev, so that the SSL certificates will
+	PROD_HOST or STAGE_HOST in .env, so that the SSL certificates will
 	work (if any).
 
 4. Run the setup script:

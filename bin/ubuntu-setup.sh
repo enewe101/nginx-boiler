@@ -4,7 +4,7 @@ SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
 
 # Verify that a valid environment mode was given.
 ENV_MODE=$1;
-if [[ "$ENV_MODE" =~ dev|prod|stage ]]; then
+if [[ "$ENV_MODE" =~ ^dev$|^prod$|^stage$ ]]; then
     echo "Starting in $ENV_MODE mode.";
 else
     echo -e "Usage: ./ubuntu-setup.sh <MODE>\n\tMODE = dev | stage | prod"
@@ -12,17 +12,18 @@ else
 fi
 
 
-# Set the rest of the environment
-# TODO: change this url to point to your new repo
-source $SCRIPTPATH/../.env.$ENV_MODE;
-
-
-# Use the appropriate host name
+# Set environment variables.  Use the proper host name.
 case "$ENV_MODE" in 
     prod)
+	source <(gpg -d $SCRIPTPATH/../.env.gpg)
         export HOST=$PROD_HOST;
         ;;
     stage)
+	source <(gpg -d $SCRIPTPATH/../.env.gpg)
+        export HOST=$STAGE_HOST;
+        ;;
+    dev)
+	source .env
         export HOST=$STAGE_HOST;
         ;;
 esac
@@ -96,11 +97,13 @@ git remote rm origin
 case "$ENV_MODE" in 
     prod) 
         echo "Note: you will need to get the production SSL certificate.";
-        echo "It should be placed in /etc/letsencrypt/live/$HOST/"
+        echo "It should be placed in cert/fullchain.pem, cert/privkey.pem, and
+		cert/dhparam.pem.
         ;;
     stage)
         echo "Note: you will need to get the production SSL certificate.";
-        echo "It should be placed in /etc/letsencrypt/live/$HOST/"
+        echo "It should be placed in cert/fullchain.pem, cert/privkey.pem, and
+		cert/dhparam.pem.
         ;;
     dev)
         echo "Creating self-signed certificate at /home/$HOST_USER/app/cert";

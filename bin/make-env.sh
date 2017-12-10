@@ -7,4 +7,4 @@ passgen () {
 SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
 
 # Source .env in the root of the app, based on relative location to this script
-$SCRIPTPATH/passgen.py $SCRIPTPATH/../.env.dev | gpg -co $SCRIPTPATH/../.env.prod.gpg
+$SCRIPTPATH/passgen.py $SCRIPTPATH/../.env | gpg -co $SCRIPTPATH/../.env.gpg

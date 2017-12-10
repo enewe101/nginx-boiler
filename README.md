@@ -13,7 +13,7 @@ app:
 	ubuntu box into a server for your new app.  Just make a few needed changes
 	in various places marked by "TODO"s.
 
-5) Edit `.env.dev` to reflect your project's name and your domain name.  There
+5) Edit `.env` to reflect your project's name and your domain name.  There
 	are three versions of your domain name: 
     1. your actual domain name, which should resolve to your production server;
     2. your development domain name, which should be like your production

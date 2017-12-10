@@ -43,16 +43,16 @@ ARGS=$(echo "$ARGS" | xargs)    # Trim whatespace around variables
 # need to set some environment variables, including secrets.
 case "$ENV_MODE" in
 	dev)
-		source .env.dev
+		source .env
 		export NODE_ENV=development
 		;;
 	stage)
-		source .env.stage
+		source <(gpg -d .env.gpg)
 		export HOST=$STAGE_HOST
 		export NODE_ENV=staging
 		;;
 	prod)
-		source <(gpg -d .env.prod.gpg)
+		source <(gpg -d .env.gpg)
 		export HOST=$PROD_HOST
 		export NODE_ENV=production
 		;;
