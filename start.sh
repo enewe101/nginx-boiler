@@ -44,17 +44,14 @@ ARGS=$(echo "$ARGS" | xargs)    # Trim whatespace around variables
 case "$ENV_MODE" in
 	dev)
 		source .env
-		export NODE_ENV=development
 		;;
 	stage)
 		source <(gpg -d .env.gpg)
 		export HOST=$STAGE_HOST
-		export NODE_ENV=staging
 		;;
 	prod)
 		source <(gpg -d .env.gpg)
 		export HOST=$PROD_HOST
-		export NODE_ENV=production
 		;;
 esac
 
@@ -62,12 +59,12 @@ esac
 # certificates can be found.
 $SCRIPTPATH/bin/fill_template.py\
 	$SCRIPTPATH/config/nginx-config-template\
-	cert_path=/app/cert server_name=$HOST\
+	cert_path=/app/cert/ server_name=$HOST\
 	node_host=$NODE_HOST node_port=$NODE_PORT\
    	> $SCRIPTPATH/config/nginx-config 
 $SCRIPTPATH/bin/fill_template.py\
 	$SCRIPTPATH/config/nginx-config-nossl-template\
-	cert_path=/app/cert server_name=$HOST\
+	cert_path=/app/cert/ server_name=$HOST\
 	node_host=$NODE_HOST node_port=$NODE_PORT\
 	> $SCRIPTPATH/config/nginx-config-nossl
 
@@ -84,12 +81,13 @@ if [ -z $USE_SSL ] || [ $USE_SSL -eq 0 ]; then
 else
     echo "Using SSL"
     CERT_PATH=$SCRIPTPATH/cert
+	MESSAGE="\nDo you need to get a SSL certificate?  See README."
     if [ ! -f $CERT_PATH/dhparam.pem ]; then
-         echo "SSL: expected $CERT_PATH/dhparam.pem"; exit 1; fi
+         echo -e "SSL: expected $CERT_PATH/dhparam.pem$MESSAGE"; exit 1; fi
     if [ ! -f $CERT_PATH/fullchain.pem ]; then
-        echo "SSL: expected $CERT_PATH/fullchain.pem"; exit 1; fi
+        echo "SSL: expected $CERT_PATH/fullchain.pem$MESSAGE"; exit 1; fi
     if [ ! -f $CERT_PATH/privkey.pem ]; then
-        echo "SSL: expected $CERT_PATH/privkey.pem"; exit 1; fi
+        echo "SSL: expected $CERT_PATH/privkey.pem$MESSAGE"; exit 1; fi
 fi
 
 # Figure out if --force-recreate was included as an arg.  If so, remove all

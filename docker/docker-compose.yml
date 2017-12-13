@@ -3,14 +3,12 @@ services:
 
   nginx:
     environment:
-      - NODE_ENV
       - USE_SSL
       - HOST
     build:
       context: ../
       dockerfile: docker/nginx-dockerfile
       args:
-        - NODE_ENV
         - USE_SSL
         - HOST
     ports:

@@ -17,3 +17,4 @@ log
 del
 mongodata
 config/nginx-config
+config/nginx-config-nossl

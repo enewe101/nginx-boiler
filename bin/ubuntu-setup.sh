@@ -1,32 +1,33 @@
 #!/usr/bin/env bash
 SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
 
-
+# We don't make use of this...
 # Verify that a valid environment mode was given.
-ENV_MODE=$1;
-if [[ "$ENV_MODE" =~ ^dev$|^prod$|^stage$ ]]; then
-    echo "Starting in $ENV_MODE mode.";
-else
-    echo -e "Usage: ./ubuntu-setup.sh <MODE>\n\tMODE = dev | stage | prod"
-    exit 1
-fi
+#ENV_MODE=$1;
+#if [[ "$ENV_MODE" =~ ^dev$|^prod$|^stage$ ]]; then
+#    echo "Starting in $ENV_MODE mode.";
+#else
+#    echo -e "Usage: ./ubuntu-setup.sh <MODE>\n\tMODE = dev | stage | prod"
+#    exit 1
+#fi
 
 
+# This does not appear to get used...
 # Set environment variables.  Use the proper host name.
-case "$ENV_MODE" in 
-    prod)
-	source <(gpg -d $SCRIPTPATH/../.env.gpg)
-        export HOST=$PROD_HOST;
-        ;;
-    stage)
-	source <(gpg -d $SCRIPTPATH/../.env.gpg)
-        export HOST=$STAGE_HOST;
-        ;;
-    dev)
-	source .env
-        export HOST=$STAGE_HOST;
-        ;;
-esac
+#case "$ENV_MODE" in 
+#    prod)
+#	source <(gpg -d $SCRIPTPATH/../.env.gpg)
+#        export HOST=$PROD_HOST;
+#        ;;
+#    stage)
+#	source <(gpg -d $SCRIPTPATH/../.env.gpg)
+#        export HOST=$STAGE_HOST;
+#        ;;
+#    dev)
+#	source .env
+#        export HOST=$STAGE_HOST;
+#        ;;
+#esac
 
 
 # Enable firewall
@@ -93,23 +94,24 @@ cd /home/$HOST_USER/app
 git remote rm origin
 
 
+# This gets checked in start.sh, so is not needed here
 # Create a self-signed certificate or remind user to get one.
-case "$ENV_MODE" in 
-    prod) 
-        echo "Note: you will need to get the production SSL certificate.";
-        echo "It should be placed in cert/fullchain.pem, cert/privkey.pem, and
-		cert/dhparam.pem.
-        ;;
-    stage)
-        echo "Note: you will need to get the production SSL certificate.";
-        echo "It should be placed in cert/fullchain.pem, cert/privkey.pem, and
-		cert/dhparam.pem.
-        ;;
-    dev)
-        echo "Creating self-signed certificate at /home/$HOST_USER/app/cert";
-        bin/self-sign-cert.sh;
-        ;;
-esac
+#case "$ENV_MODE" in 
+#    prod) 
+#        echo "Note: you will need to get the production SSL certificate.";
+#        echo "It should be placed in cert/fullchain.pem, cert/privkey.pem, and
+#		cert/dhparam.pem."
+#        ;;
+#    stage)
+#        echo "Note: you will need to get the production SSL certificate.";
+#        echo "It should be placed in cert/fullchain.pem, cert/privkey.pem, and
+#		cert/dhparam.pem."
+#        ;;
+#    dev)
+#        echo "Creating self-signed certificate at /home/$HOST_USER/app/cert";
+#        bin/self-sign-cert.sh;"
+#        ;;
+#esac
 
 
 # Give the app folder and everything in it to appuser

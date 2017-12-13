@@ -28,15 +28,15 @@ EXPOSE 80 443
 
 # Activate correct config file (depending on if SSL used) and restart nginx.
 CMD (\
-      test ! -z "$USE_SSL" && test "$USE_SSL" -ne 0\
-      && ln -s /app/config/nginx-config /etc/nginx/sites-available/$HOST\ 
-	  && ln -s /app/config/nginx-config /etc/nginx/sites-enabled/$HOST\
-	  || true )\
+     test ! -z "$USE_SSL" && test "$USE_SSL" -ne 0\
+     && ln -sf /app/config/nginx-config /etc/nginx/sites-available/$HOST\ 
+	 && ln -sf /app/config/nginx-config /etc/nginx/sites-enabled/$HOST\
+	 || true )\
   && (\
-      test -z "$USE_SSL" || test "$USE_SSL" -eq 0\
-      && ln -s /app/config/nginx-config-nossl /etc/nginx/sites-available/$HOST\ 
-	  && ln -s /app/config/nginx-config-nossl /etc/nginx/sites-enabled/$HOST\
-      || true )\
+     test -z "$USE_SSL" || test "$USE_SSL" -eq 0\
+     && ln -sf /app/config/nginx-config-nossl /etc/nginx/sites-available/$HOST\ 
+	 && ln -sf /app/config/nginx-config-nossl /etc/nginx/sites-enabled/$HOST\
+     || true )\
   && /etc/init.d/nginx restart\
   && tail -f /dev/null
   
