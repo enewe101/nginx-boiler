@@ -15,8 +15,17 @@ rebuild the images from scratch (e.g. if changes are made to files in
 
 Once the server dockers are started up, you can do:
 
-    $ bin/docker-connect.sh
+    $ bin/connect.sh
 
 To enter into the docker container in which nginx is running.
 The nginx logs are located at `/var/log/nginx`
+
+You can interact with the nginx command line tool through it's symlink under
+bin:
+
+    $ bin/nginx <subcommand>
+
+For example, to restart the server
+
+    $ bin/nginx restart
 

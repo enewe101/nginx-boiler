@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
 
+source <(gpg -d $SCRIPTPATH/../.env.gpg)
 
 # Enable firewall
 ufw default deny incoming

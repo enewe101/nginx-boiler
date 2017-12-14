@@ -1,19 +1,16 @@
 #!/usr/bin/env bash
 #
-#   Start the production environment.  Builds and runs two containers:
-#   1) a node server running under pm2 supervisor with nginx reverse-proxy
-#   2) a mongodb instance
-#
-#   The mongodb instance uses a volume so changes are persisted after you stop
-#   the containers.
+#   Builds and runs a docker container, within which it starts an nginx
+#   reverse-proxy
 #
 #   Use Ctrl-C to stop the containers.
 #
-#   If something happens and the containers aren't starting properly,
-#   Try running using the ``--force-recreate`` option, i.e. do
-#       ``docker-compose -f docker-compose-production.yml up --force-recreate``
-#   As a last resort, try killing, removing all containers, volumes, and images,
-#   and then run this script.
+#   After the first build, the docker image is retained, so subsequent runs
+#   will not rebuild the docker, but just start a new container from the image.
+#	If you need to rebuild the docker use the `--force-recreate`. 
+#	
+#	To remove all containers, images, volumes without rebuilding do
+#	`bin/docker-rm`
 #
 
 # Get the path to this script (regardless of current working dir).
